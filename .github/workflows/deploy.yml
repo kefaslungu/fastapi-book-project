@@ -1,0 +1,29 @@
+name: Deployment Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up SSH key
+        env:
+          VM_KEY: ${{ secrets.VM_KEY }}
+        run: |
+          echo "Setting up SSH key..."
+          # Save the SSH key to a file named deploy_key
+          echo "$VM_KEY" > deploy_key
+          chmod 600 deploy_key
+          mkdir -p ~/.ssh
+          ssh-keyscan -H your-azure-server >> ~/.ssh/known_hosts
+
+      - name: Deploy Application via SSH
+        run: |
+          ssh -i deploy_key kefaslungu@172.206.206.1 "cd /home/kefaslungu/fastapi-book-project && git pull && docker-compose up -d"
