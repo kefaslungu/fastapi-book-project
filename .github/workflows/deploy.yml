@@ -22,7 +22,7 @@ jobs:
           echo "$VM_KEY" > deploy_key
           chmod 600 deploy_key
           mkdir -p ~/.ssh
-          ssh-keyscan -H your-azure-server >> ~/.ssh/known_hosts
+          ssh-keyscan -H 172.206.206.1 >> ~/.ssh/known_hosts
 
       - name: Deploy Application via SSH
         run: |
