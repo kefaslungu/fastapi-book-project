@@ -26,4 +26,4 @@ jobs:
 
       - name: Deploy Application via SSH
         run: |
-          ssh -i deploy_key kefaslungu@172.206.206.1 "cd /home/kefaslungu/fastapi-book-project && git pull && docker-compose up -d"
+          ssh -i deploy_key kefaslungu@172.206.206.1 "cd /home/kefaslungu/fastapi-book-project && git pull && sudo systemctl stop nginx && docker-compose up -d"
